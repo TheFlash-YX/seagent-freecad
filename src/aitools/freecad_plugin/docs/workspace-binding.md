@@ -1,0 +1,11 @@
+# 当前聊天与项目绑定
+
+安装/注册完全项目无关。打开业务项目聊天后，setup技能从宿主exec实际cwd生成prepare回执，不让用户重复选文件夹。源码、机器状态和业务目录不能互相包含；cwd不是文件访问沙箱。无法取得可信cwd就停止，不回退插件安装根。
+
+prepare --project真实绝对路径：建立全局当前project/generation并返回marker；start只启动或复用此绑定的受管GUI。seagent_connect(marker)将当前MCP连接固定到该generation，消费标记并验证本地身份，随后启动原版上游；原版初始化会ping/get_rpc_status，仅在已证明归属时允许。管理标记不是防同用户攻击的秘密认证。每项目单控制连接，不做多实例调度。
+
+每次业务调用先检查绑定generation、PID+创建身份、监听PID和启动回执cwd。失配旧连接拒绝，不重新读取全局绑定后偷偷控制新GUI。headless也受同一门控；MCP启动后显式chdir，GUI启动cwd和回执相同，原版headless继承MCP cwd（真实链路待验）。
+
+切项目：任务/异步/headless均终态→用户保存并自行退出GUI→目标聊天exec prepare→start→新连接seagent_connect。旧连接不能重新握手新generation，不改活实例cwd。新聊天是否实际新建MCP连接是桌面宿主待验项；不能可靠新建时停止，不承诺透明切换，不用重注册或复杂重启掩盖体验问题。
+
+同步超时、桥接断开、async状态未知会保留pending.json，阻止切换更新和更多写请求，仅允许状态查询。get_async_status确认终态后可移除对应job；其他未知请求须按诊断的离线审计恢复。单元mock通过不等于真实GUI身份/profile隔离通过。

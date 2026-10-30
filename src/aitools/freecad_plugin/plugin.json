@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "seagent-freecad",
+  "version": "0.2.0",
+  "description": "FreeCAD local management bridge: 17 upstream CAD tools plus project handshake.",
+  "author": {
+    "name": "SEAgent"
+  },
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/setup/SKILL.md",
+      "interface": {
+        "displayName": "SEAgent FreeCAD",
+        "shortDescription": "本机 FreeCAD STEP 操作与可追溯保存"
+      }
+    }
+  }
+}
