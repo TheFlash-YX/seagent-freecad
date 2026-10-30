@@ -17,6 +17,10 @@ def run(exe,*args):
     return p.stdout
 
 
+def relative_key(path,base):
+    return path.relative_to(base).as_posix()
+
+
 def source_files():
     repo=manage.PACKAGE.parents[2]
     manifest=manage.read(repo/'delivery-files.json')['files']
@@ -42,7 +46,7 @@ def generate(data):
                   "$info.FileName="+ps+"\n"
                   "$info.Arguments='"+native_args+"'\n"
                   "$info.UseShellExecute=$false\n$info.CreateNoWindow=$true\n"
-                  "$info.RedirectStandardInput=$true\n$info.RedirectStandardOutput=$true\n$info.RedirectStandardError=$true\n"
+                  "$info.EnvironmentVariables['PYTHONUTF8']='1'\n$info.EnvironmentVariables['PYTHONIOENCODING']='utf-8'\n$info.RedirectStandardInput=$true\n$info.RedirectStandardOutput=$true\n$info.RedirectStandardError=$true\n"
                   "$p=New-Object Diagnostics.Process\n$p.StartInfo=$info\n[void]$p.Start()\n"
                   "$inputTask=[Console]::OpenStandardInput().CopyToAsync($p.StandardInput.BaseStream)\n"
                   "$outputTask=$p.StandardOutput.BaseStream.CopyToAsync([Console]::OpenStandardOutput())\n"
@@ -58,7 +62,7 @@ def generate(data):
     mcp={'$schema':'https://agent-plugins.org/schemas/1.0.0/mcp.schema.json','mcpServers':{'freecad':{'type':'stdio','command':command,'args':args,'cwd':'./'}}}
     expected['mcp.json']=(json.dumps(mcp,ensure_ascii=False,indent=2)+'\n').encode()
     if plugin.exists():
-        actual={str(p.relative_to(plugin)):p.read_bytes() for p in plugin.rglob('*') if p.is_file() and '__pycache__'not in p.parts}
+        actual={relative_key(p,plugin):p.read_bytes() for p in plugin.rglob('*') if p.is_file() and '__pycache__'not in p.parts}
         if actual!=expected:raise RuntimeError('已有不同生成包，保留不覆盖；更新请新机器根/版本目录')
     else:
         for n,v in expected.items():
@@ -103,7 +107,7 @@ def deploy(data,codex,install=False):
         candidate=installed.get('installedPath')
         if not candidate:raise RuntimeError('安装命令未返回installedPath，请保留现场诊断')
         cache=Path(candidate)
-    wanted={str(p.relative_to(plugin)):manage.digest(p) for p in plugin.rglob('*') if p.is_file() and '__pycache__'not in p.parts}
+    wanted={relative_key(p,plugin):manage.digest(p) for p in plugin.rglob('*') if p.is_file() and '__pycache__'not in p.parts}
     if not cache.is_dir() or any(not(cache/n).is_file() or manage.digest(cache/n)!=h for n,h in wanted.items()):raise RuntimeError('实际安装缓存与生成源码不一致')
     manage.write(data/'deployment.json',dict(selector=selector,marketplace=str(dest),cache=str(cache),files=wanted,codex=exe))
     summary.update(installed=True,installedPath=str(cache),verified_files=len(wanted),note='注册成功不等于CAD已连接；首次项目使用按setup握手')

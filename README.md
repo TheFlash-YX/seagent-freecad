@@ -19,3 +19,5 @@
 [delivery-files.json](delivery-files.json)是逐文件交付白名单。ZIP不含`.git`、runtime、机器配置、token、模型或日志；源码ZIP首次安装需联网下载固定SHA256依赖，不是离线依赖包。私有仓库不意味着向公众开源；上游MIT见[许可说明](src/aitools/freecad_plugin/references/licenses.md)，自有源码未授予公开再分发许可。协作者用各自账号，owner按最小权限手动邀请；不共享凭据。
 
 验证入口：用独立runtime的Python运行 `-m unittest discover -s src/aitools/freecad_plugin/tests -v` 与 `src/aitools/freecad_plugin/tests/check_package.py`。隔离CLI发现probe需要显式独立CODEX_HOME、已安装机器data和空白project，见tests/probe_host.py --help；不要对既有9875直接初始化原版MCP。synthetic_geometry.py只能在之后获准的全新CAD测试会话执行，当前未运行。
+
+Git的.gitattributes禁止自动转换行尾，确保Windows core.autocrlf=true时锁文件SHA与ZIP原始字节一致；PowerShell脚本UTF-8 BOM同样保留。

@@ -32,7 +32,8 @@ class Upstream:
         # POSIX shlex is upstream's actual parser even on Windows.
         argv=[str(Path(x).as_posix()) if i==0 else x for i,x in enumerate(c['freecadcmd'])]
         cmd=[ready['mcp'],'--host','127.0.0.1','--freecadcmd',shlex.join(argv)]
-        self.proc=subprocess.Popen(cmd,cwd=project,stdin=subprocess.PIPE,stdout=subprocess.PIPE,
+        env=os.environ.copy();env.update(PYTHONIOENCODING='utf-8',PYTHONUTF8='1')
+        self.proc=subprocess.Popen(cmd,cwd=project,env=env,stdin=subprocess.PIPE,stdout=subprocess.PIPE,
                                    stderr=sys.stderr,text=True,encoding='utf-8',bufsize=1)
         self.waiters={};self.lock=threading.Lock();self.closed=False
         threading.Thread(target=self.reader,daemon=True).start()
@@ -177,6 +178,8 @@ class Bridge:
 
 
 def main():
+    # MCP is UTF-8 regardless of Windows redirected-pipe locale/codepage.
+    for stream in (sys.stdin,sys.stdout,sys.stderr):stream.reconfigure(encoding='utf-8')
     ap=argparse.ArgumentParser();ap.add_argument('--data');a=ap.parse_args();bridge=Bridge(manage.root(a.data))
     try:
         for line in sys.stdin:

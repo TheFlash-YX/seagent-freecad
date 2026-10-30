@@ -9,7 +9,7 @@
 | 新独立机器根固定hash依赖安装 | PASS，Mac arm64 |
 | 无.git ZIP中文空格路径第二独立根bootstrap/configure/注册 | PASS，无Git或开发环境依赖 |
 | CLI0.163.0隔离CODEX_HOME实际cache hash与app-server发现 | PASS，7skills/18工具，未绑定bridge connected，零CAD调用 |
-| 14项管理/桥接回归 | PASS；含旧连接拒绝、消费marker、固定上游operations实际async文本和列表、未知任务阻止切换、图片/structuredContent、真实合成stdio子进程通知/ID、固定operation捕获RPC reset仍保留未知任务 |
+| 16项管理/桥接回归 | PASS；含旧连接拒绝、消费marker、固定上游operations实际async文本和列表、未知任务阻止切换、图片/structuredContent、真实合成stdio子进程通知/ID、固定operation捕获RPC reset仍保留未知任务 |
 | 固定上游schema | PASS，仅离线对象反射逐项比较17schema，不运行transport/lifespan |
 | 初次CLI插件发现失败 | 已修复：mcp.schema必需$schema、command仅bare或contained ./；失败保留，不计最终通过 |
 | lifecycle切换前pending/嵌套data/共享marketplace保护 | PASS mock；真实跨版本/GUI回退待验 |
@@ -21,3 +21,5 @@
 所有真实GUI/首次握手、headless执行/cwd、图片展示、桌面新聊天是否新建连接、跨版本GUI回退均待验。当前9875已有实例，未为验收关闭/换端口/启动第二实例。Windows x64由用户后续实机验证；PowerShell、FreeCAD CLI/profile隔离和中文空格CreateProcess均未通过声明。
 
 证据在交付源码以外的delivery目录，不能把机器日志放进源码ZIP；最终测试摘要仅记合成/隔离结果。不复用历史FreeCAD或SolidCraft通过结论。
+
+Windows静态兼容修复另经Mac回归：强制MCP UTF-8（含上游子进程环境）、PowerShell CIM UTF-8解码及manifest键.as_posix；ASCII管道环境下桥中文JSON和PureWindowsPath测试通过。不是Windows原生执行证明。Git core.autocrlf=true真实克隆52文件字节一致，锁SHA与PS1 BOM保留。

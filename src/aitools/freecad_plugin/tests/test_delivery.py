@@ -207,4 +207,29 @@ class InterruptedWriteTests(unittest.TestCase):
                 with patch.object(manage,'guard'),patch.object(bridge,'send'):x.call(3,{'name':'execute_code'})
                 self.assertEqual(bool(manage.pending(data)),unknown)
 
+
+
+class WindowsByteContractTests(unittest.TestCase):
+    def test_bridge_utf8_under_ascii_redirected_locale(self):
+        import os,threading,queue
+        with tempfile.TemporaryDirectory() as d:
+            child=subprocess.Popen([sys.executable,str(P/'scripts/bridge.py'),'--data',d],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,encoding='utf-8',env=dict(os.environ,PYTHONIOENCODING='ascii'))
+            child.stdin.write(json.dumps({'jsonrpc':'2.0','id':1,'method':'tools/call','params':{'name':'get_rpc_status'}})+'\n');child.stdin.flush()
+            lines=queue.Queue();threading.Thread(target=lambda:lines.put(child.stdout.readline()),daemon=True).start()
+            line=lines.get(timeout=10)
+            self.assertIn('尚未连接',line)
+            self.assertTrue(json.loads(line)['result']['isError'])
+            child.stdin.close();child.wait(timeout=5);child.stdout.close();child.stderr.close()
+
+    def test_posix_manifest_keys_and_powershell_utf8(self):
+        import deploy
+        from pathlib import PureWindowsPath
+        self.assertEqual(deploy.relative_key(PureWindowsPath('C:/plugin/skills/setup/SKILL.md'),PureWindowsPath('C:/plugin')),'skills/setup/SKILL.md')
+        class Process:
+            stdout='中文路径'
+        with patch.object(manage.subprocess,'run',return_value=Process()) as run:
+            self.assertEqual(manage.powershell('test-command'),'中文路径')
+            self.assertEqual(run.call_args.kwargs['encoding'],'utf-8')
+            self.assertIn('[Console]::OutputEncoding',run.call_args.args[0][-1])
+
 if __name__=='__main__':unittest.main(verbosity=2)

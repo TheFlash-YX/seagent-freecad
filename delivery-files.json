@@ -1,6 +1,7 @@
 {
   "version": "0.2.0",
   "files": [
+    ".gitattributes",
     ".gitignore",
     "AGENTS.md",
     "CHANGELOG.md",

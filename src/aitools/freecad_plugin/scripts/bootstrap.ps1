@@ -27,5 +27,5 @@ if (!(Test-Path -LiteralPath $PythonDir)) {
   if ($LASTEXITCODE -ne 0) { throw 'Python解压失败；保留现场' }
   Move-Item -LiteralPath $Stage -Destination $PythonDir
 }
-& (Join-Path $PythonDir 'python.exe') (Join-Path $PSScriptRoot 'bootstrap.py') --data $Data
+& (Join-Path $PythonDir 'python.exe') -X utf8 (Join-Path $PSScriptRoot 'bootstrap.py') --data $Data
 if ($LASTEXITCODE -ne 0) { throw '依赖准备失败，按具体错误恢复；未启动FreeCAD' }

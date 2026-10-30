@@ -81,8 +81,9 @@ def occupied():
 
 
 def powershell(code):
-    return subprocess.run(['powershell.exe', '-NoProfile', '-NonInteractive', '-Command', code],
-                          capture_output=True, text=True, check=True, timeout=15).stdout.strip()
+    prefix="[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new($false);$OutputEncoding=[Console]::OutputEncoding;"
+    return subprocess.run(['powershell.exe', '-NoProfile', '-NonInteractive', '-Command', prefix+code],
+                          capture_output=True, text=True, encoding='utf-8', errors='strict', check=True, timeout=15).stdout.strip()
 
 
 def identity(pid):
