@@ -1,0 +1,20 @@
+{
+  "name": "seagent-freecad-local",
+  "interface": {
+    "displayName": "SEAgent FreeCAD Local"
+  },
+  "plugins": [
+    {
+      "name": "seagent-freecad",
+      "source": {
+        "source": "local",
+        "path": "./src/aitools/freecad_plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

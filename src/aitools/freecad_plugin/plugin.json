@@ -1,17 +1,17 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "seagent-freecad",
-  "version": "0.2.0",
-  "description": "FreeCAD local management bridge: 17 upstream CAD tools plus project handshake.",
+  "version": "0.1.0",
+  "description": "固定原版 FreeCAD MCP 的本地 Codex 插件接入与项目 SE 身份初始化。",
   "author": {
     "name": "SEAgent"
   },
   "extensions": {
     "com.openai": {
-      "onboardingSkill": "./skills/setup/SKILL.md",
+      "onboardingSkill": "./skills/seagent-project-init/SKILL.md",
       "interface": {
         "displayName": "SEAgent FreeCAD",
-        "shortDescription": "本机 FreeCAD STEP 操作与可追溯保存"
+        "shortDescription": "原版 FreeCAD MCP 接入与 SE 项目身份初始化"
       }
     }
   }

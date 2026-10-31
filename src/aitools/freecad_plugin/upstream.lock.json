@@ -5,35 +5,19 @@
   "archive_url": "https://codeload.github.com/neka-nat/freecad-mcp/tar.gz/8babe9927ce8e6e8fe7dd6ae2ffa2c93776e845a",
   "archive_sha256": "f2d623d0d1dec086a46e156d2d169c0456b52a81db5593134b641e7baa08870f",
   "dependency_lock_sha256": "d2bedffc4968565ed8c21a75ea1b4536e7c938fa91360d82ba1195820145ee7b",
+  "uv": {
+    "version": "0.11.14",
+    "platform": "aarch64-apple-darwin",
+    "sha256": "4333af5c0730d94323a7819bbdf87ce92dd07fc857d67fff0059e0fca31b5c02",
+    "url": "https://github.com/astral-sh/uv/releases/download/0.11.14/uv-aarch64-apple-darwin.tar.gz"
+  },
+  "python": {
+    "version": "3.12.13",
+    "build": "20260510",
+    "sha256": "55bc1a5edbc8ac4da0081f4f5731ed2d1ed10c57cb37a820b2a0dbc7cad742e9",
+    "url": "https://releases.astral.sh/github/python-build-standalone/releases/download/20260510/cpython-3.12.13%2B20260510-aarch64-apple-darwin-install_only_stripped.tar.gz"
+  },
   "license": "MIT",
   "license_note": "\u4e0a\u6e38\u5b9e\u9645LICENSE\u968freferences/UPSTREAM-LICENSE\u4fdd\u7559\uff1b\u4f20\u9012\u4f9d\u8d56\u8bb8\u53ef\u8bc1\u89c1reference\u53ca\u5b89\u88c5\u5143\u6570\u636e",
-  "build_dependency_lock_sha256": "af8cf9d33917e3c33c3292a331330b0b5e7050a026945431a70accab3d21966f",
-  "platforms": {
-    "Darwin-arm64": {
-      "uv": {
-        "version": "0.11.14",
-        "platform": "aarch64-apple-darwin",
-        "sha256": "4333af5c0730d94323a7819bbdf87ce92dd07fc857d67fff0059e0fca31b5c02",
-        "url": "https://github.com/astral-sh/uv/releases/download/0.11.14/uv-aarch64-apple-darwin.tar.gz"
-      },
-      "python": {
-        "version": "3.12.13",
-        "build": "20260510",
-        "sha256": "55bc1a5edbc8ac4da0081f4f5731ed2d1ed10c57cb37a820b2a0dbc7cad742e9",
-        "url": "https://releases.astral.sh/github/python-build-standalone/releases/download/20260510/cpython-3.12.13%2B20260510-aarch64-apple-darwin-install_only_stripped.tar.gz"
-      }
-    },
-    "Windows-AMD64": {
-      "uv": {
-        "version": "0.11.14",
-        "url": "https://github.com/astral-sh/uv/releases/download/0.11.14/uv-x86_64-pc-windows-msvc.zip",
-        "sha256": "52ba5d19409aaa688a8a1a6ec8dfb6a4817230d20186e75f4006105c3e39a846"
-      },
-      "python": {
-        "version": "3.12.13",
-        "url": "https://releases.astral.sh/github/python-build-standalone/releases/download/20260510/cpython-3.12.13%2B20260510-x86_64-pc-windows-msvc-install_only_stripped.tar.gz",
-        "sha256": "24168aff2e7d93784c6a436124c4ebb79b076a4e289bde4902c08333507b71d0"
-      }
-    }
-  }
+  "build_dependency_lock_sha256": "af8cf9d33917e3c33c3292a331330b0b5e7050a026945431a70accab3d21966f"
 }

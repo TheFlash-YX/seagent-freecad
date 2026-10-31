@@ -1,6 +1,6 @@
 # 依赖许可证清单
 
-固定依赖许可清单；本次独立安装仍须以锁与实际dist-info元数据核对。版本和hash由uv.lock及build-requirements.lock锁定。上游MCP实际MIT原文见UPSTREAM-LICENSE；第三方许可保留在受管安装各dist-info/licenses目录（如提供）。本清单不替代原许可全文。
+2026-10-27受管Python环境实际安装元数据；版本和hash由uv.lock及build-requirements.lock锁定。上游MCP实际MIT原文见UPSTREAM-LICENSE；第三方许可保留在受管安装各dist-info/licenses目录（如提供）。本清单不替代原许可全文。
 
 | 依赖 | 版本 | 元数据许可 |
 |---|---|---|

@@ -1,4 +1,11 @@
 {
-  "template_only": true,
-  "note": "Machine installer generates absolute Python/bridge config. No project selected at installation."
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "freecad": {
+      "type": "stdio",
+      "command": "./scripts/launch.sh",
+      "args": [],
+      "cwd": "./"
+    }
+  }
 }
