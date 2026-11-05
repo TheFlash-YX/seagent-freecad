@@ -46,3 +46,7 @@
 | typing_extensions | 4.16.0 | PSF-2.0 |
 | uvicorn | 0.34.0 | BSD-3-Clause |
 | validators | 0.35.0 | MIT |
+
+## 内置第三方快照
+
+0.1.1 将 neka-nat/freecad-mcp 0.1.28 固定提交完整内置，业务代码未修改。vendor/freecad-mcp/LICENSE 与 references/UPSTREAM-LICENSE 逐字节一致；原版权保留。上表为历史固定环境元数据记录，不替代每次实际安装许可证审阅；本次未升级依赖锁。

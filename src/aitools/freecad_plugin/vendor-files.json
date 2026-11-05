@@ -1,0 +1,411 @@
+{
+  "schema_version": 1,
+  "upstream_commit": "8babe9927ce8e6e8fe7dd6ae2ffa2c93776e845a",
+  "files": {
+    ".github/workflows/test.yml": {
+      "sha256": "bf79bb71792d8c0403fe2b2d56155fdd4b25c5237dc06c1b8178f12e470613e8",
+      "size": 1417,
+      "mode": "100644"
+    },
+    ".gitignore": {
+      "sha256": "04b2546a3e76b15bacd70165bdbc0cc2f5eeca0e782119b1db885450a762e638",
+      "size": 44,
+      "mode": "100644"
+    },
+    ".python-version": {
+      "sha256": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+      "size": 5,
+      "mode": "100644"
+    },
+    "AGENTS.md": {
+      "sha256": "1b8d3eaa45dbeccf7061fd80c4e25b93218f9a985ca27c41b631c6f1738c9a75",
+      "size": 2724,
+      "mode": "100644"
+    },
+    "LICENSE": {
+      "sha256": "396a409dd7ea20bb4f0bf2e2478daae4b8e28648d3c2d5b56f53b5b8715959c1",
+      "size": 1077,
+      "mode": "100644"
+    },
+    "README.md": {
+      "sha256": "6660a198366756b9fc99f87dfdb6515c9746158494bc805a492e7a8482bab121",
+      "size": 2808,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/Init.py": {
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size": 1,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/InitGui.py": {
+      "sha256": "349786df88e3a346e2c9a99d9f1fb7168c06312548f1a10c405643f317367edf",
+      "size": 1564,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/package.xml": {
+      "sha256": "e2ef521f34a0e20cf3809053c5d80ed0cd78d0a423987b935ca45cd08b100c15",
+      "size": 1196,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/__init__.py": {
+      "sha256": "1b7786fa2055d10a04f9e20ebf1e75af21c736935a132ce9e9cc940382dbe228",
+      "size": 111,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/commands.py": {
+      "sha256": "410962f1af1ce11c3e1f25fffb7b86097f5e1101fc3316fa45adf3537c7e7054",
+      "size": 8536,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/dispatch_health.py": {
+      "sha256": "2e35efbe34549c4d3398e33ee651121b57aa5d0b208b93a79b969ac9696674ab",
+      "size": 3802,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/fem_executor.py": {
+      "sha256": "0e5861b21c272b6e151d9b6b0c3ab474058f2c9c983cfe6e0f14bb57e47a4979",
+      "size": 4158,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/gui_dispatch.py": {
+      "sha256": "fdc5fbe96095a393e15c6ee8d00d162ee23b22663b9ef6d90b5963a6eab2d339",
+      "size": 15075,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/ip_filter.py": {
+      "sha256": "48a691a44630a6bfce092da9255e41f02158f5a052ad1c497abdd162fd55c3b0",
+      "size": 7917,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/object_factory.py": {
+      "sha256": "a8cc7c68083573f68ffc336a1238c2e11d792b92b33b49703c07091352d1c1ed",
+      "size": 11853,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/object_validation.py": {
+      "sha256": "21665a5d6dc50304622cf22d0d13d641e29303062862c418fcd7757ce2993d5e",
+      "size": 2188,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/parts_library.py": {
+      "sha256": "dfb9575921d5d33c0c0b6163bf67356cc0910b4121a31d3e38e6b3a2c3f0e946",
+      "size": 1625,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/property_mapper.py": {
+      "sha256": "55000b6160ecde1b760b08376e35ea574d1a7883b457df632ecfa8d9a0d9a49c",
+      "size": 5285,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/rpc_server.py": {
+      "sha256": "85bd339fbdcc041fae52416e40269d112332a971f3cb52e413c385ea9b7615c4",
+      "size": 27222,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/serialize.py": {
+      "sha256": "47113e474fc7df87f80f2bfc724c92a84e22c185acecfa77e2210eb74c18bd19",
+      "size": 3086,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/settings.py": {
+      "sha256": "a0ecb6176e658847bf77feb08c74ef33e8106cd301271daedcdc356e5e48605f",
+      "size": 1185,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/version.py": {
+      "sha256": "234333277b2867ca318977274e04b3663426c190c906e7843b97ffcb2ebd2be7",
+      "size": 819,
+      "mode": "100644"
+    },
+    "addon/FreeCADMCP/rpc_server/view_manager.py": {
+      "sha256": "720bf582f483368bcf89d5e259f1eed524061b242b6de4a89fa224452ac0f6b3",
+      "size": 6525,
+      "mode": "100644"
+    },
+    "assets/b9-1.png": {
+      "sha256": "18b98b3551976bd0278649b30c1957e764e5f5d373f012af8e94997ef4b2d172",
+      "size": 43596,
+      "mode": "100644"
+    },
+    "assets/freecad_mcp4.gif": {
+      "sha256": "03f04d9e7c65fda13e1b1efc171c6f8fe3ff00ceb88c3a1a801f7dbb7ed53798",
+      "size": 1912674,
+      "mode": "100644"
+    },
+    "assets/from_2ddrawing.gif": {
+      "sha256": "afe4bb7e3f8d59d9a0e6bcb43654273926dd6f7dbfa121661e10379f5dcb5195",
+      "size": 2615757,
+      "mode": "100644"
+    },
+    "assets/make_toycar4.gif": {
+      "sha256": "31560657aacb73abedec840fa5608bd16ddab94bc4bc5a74862530f45e7c579a",
+      "size": 2754318,
+      "mode": "100644"
+    },
+    "assets/rpc-startup-error.png": {
+      "sha256": "b5a9bd8aa5faee5289a32c282d828e6e743e1ca300f561a754bf1719fdbea9ea",
+      "size": 115357,
+      "mode": "100644"
+    },
+    "assets/rpc-startup-success.png": {
+      "sha256": "f337b50982348c1964c7fe69a8c896f0528677cf98cbe2654a01e673e227e7b8",
+      "size": 115137,
+      "mode": "100644"
+    },
+    "assets/start_rpc_server.png": {
+      "sha256": "8677220c9d85f7711e6e4ce55d8c92901c4a6303ee349dba827d10640bbe37be",
+      "size": 30706,
+      "mode": "100644"
+    },
+    "assets/workbench_list.png": {
+      "sha256": "56945015c08d711c8bde35e65720d034eb8aee2923e86f47e2d95e9e6853455a",
+      "size": 165107,
+      "mode": "100644"
+    },
+    "docs/configuration.md": {
+      "sha256": "e97dddd2185a1255675657759ec4eb827f56e6f9bf7d5a76d0212cbdb8c25379",
+      "size": 4500,
+      "mode": "100644"
+    },
+    "docs/examples.md": {
+      "sha256": "7399a16f34cfd0420fc4eeefd71200ee1ca9d999d3961b2baba8db2d6ef19593",
+      "size": 1244,
+      "mode": "100644"
+    },
+    "docs/execution.md": {
+      "sha256": "2a4c14b9bea0edfa891869b28629ddee9edf35d08a14e0f87c9454e133df2b3e",
+      "size": 6458,
+      "mode": "100644"
+    },
+    "docs/installation.md": {
+      "sha256": "a6d6998c1db8ddff31cd732b6667e853d7779f85947193d59ac8b53d0c631c86",
+      "size": 8526,
+      "mode": "100644"
+    },
+    "docs/tools.md": {
+      "sha256": "58f2ac678788586355c59dcf219aad8bc29e9cedab669c500f6d371fd0eddb21",
+      "size": 3270,
+      "mode": "100644"
+    },
+    "examples/adk/.env": {
+      "sha256": "3c9adaa66250c436eb151abe439c5a1b1b0855e0d1ddc751a52e385ff5755e93",
+      "size": 19,
+      "mode": "100644"
+    },
+    "examples/adk/__init__.py": {
+      "sha256": "99ebf141926f4a11ab05c0ad51d04ca1f0bd34a1d1786a58509f23803cad0964",
+      "size": 18,
+      "mode": "100644"
+    },
+    "examples/adk/agent.py": {
+      "sha256": "d486bb2473875da643e3b6598bc771125fabd9330ac503b0745eac5af9d05c18",
+      "size": 694,
+      "mode": "100644"
+    },
+    "examples/cantilever_fem.py": {
+      "sha256": "9d9600fd3571a51f89b5744d240859bf592f2fab4521ec704fa8e4f9ad57e6ec",
+      "size": 6508,
+      "mode": "100644"
+    },
+    "examples/langchain/react.py": {
+      "sha256": "e608884b769c90e045c7e471d5e4932d18e742df6439fb3626c6dde0b2d78b01",
+      "size": 2167,
+      "mode": "100644"
+    },
+    "pyproject.toml": {
+      "sha256": "2695dd3297cf9b970dd0998a621468222f4fb0feb690ff390af37454098fc698",
+      "size": 967,
+      "mode": "100644"
+    },
+    "scripts/bump_version.py": {
+      "sha256": "9d5a6239d6703a89df68ea993cced93ff877557f531c067426627d87ae299b32",
+      "size": 3162,
+      "mode": "100644"
+    },
+    "src/freecad_mcp/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "mode": "100644"
+    },
+    "src/freecad_mcp/freecad_client.py": {
+      "sha256": "3b123e84a8ddd3afa6cbcf06331b8c207687db78730b1fd7666c5ce070ac407d",
+      "size": 8132,
+      "mode": "100644"
+    },
+    "src/freecad_mcp/headless.py": {
+      "sha256": "c99926ce48a9e7a520dae9526dcbd1136b31a8e9afd100c27c2e225071162989",
+      "size": 4991,
+      "mode": "100644"
+    },
+    "src/freecad_mcp/operations/__init__.py": {
+      "sha256": "94d9d9f83d860876e81eff9f7d06c746d9361737e0c2c0b42d364de38a286cde",
+      "size": 1105,
+      "mode": "100644"
+    },
+    "src/freecad_mcp/operations/core.py": {
+      "sha256": "1d8185c34a1ea2b669bdb41559be9d9a03ad54dfdb2321c6998b628663bf5f1e",
+      "size": 14462,
+      "mode": "100644"
+    },
+    "src/freecad_mcp/prompt_text.py": {
+      "sha256": "95f781aaa1534c647ba203250ebef39e80353061fce0ed920228222badabb304",
+      "size": 2156,
+      "mode": "100644"
+    },
+    "src/freecad_mcp/py.typed": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "mode": "100644"
+    },
+    "src/freecad_mcp/responses.py": {
+      "sha256": "e25b58a011f6cc3e82bbe96fba51307ad18dd0aa164db3cf423d7aa295716d0c",
+      "size": 1039,
+      "mode": "100644"
+    },
+    "src/freecad_mcp/server.py": {
+      "sha256": "80aba311dd4e88a6d5908d5b53b6b959733bacff65ecb128679352491a26f84f",
+      "size": 31279,
+      "mode": "100644"
+    },
+    "src/freecad_mcp/server_state.py": {
+      "sha256": "3d62e9cc3e3ba6f0f28bf6310dcd985b5b298da5cb3e2ab78e6c2718c03a6e78",
+      "size": 453,
+      "mode": "100644"
+    },
+    "src/freecad_mcp/version.py": {
+      "sha256": "67368379aec73c3863f0235249f58bc040f7732354ed233d6492fd419be55276",
+      "size": 2347,
+      "mode": "100644"
+    },
+    "tests/test_async_status_client.py": {
+      "sha256": "c848d9c050a6e4be2a2b7d9c8e5518fad4a33956a72871881b94992a42eaac66",
+      "size": 1645,
+      "mode": "100644"
+    },
+    "tests/test_async_status_text.py": {
+      "sha256": "9d5c6632866d970806f6cd3251dd6fac9db400bfdeb45b89ef074622c246a550",
+      "size": 1897,
+      "mode": "100644"
+    },
+    "tests/test_auth.py": {
+      "sha256": "a8847d10b6e75f927c6e43488110e66e1f0e98d185ab79557f50a828e3534982",
+      "size": 6001,
+      "mode": "100644"
+    },
+    "tests/test_browser_guard.py": {
+      "sha256": "b12791d3d15ac8e1b281aa2ef0641857852e034fc1ea9eacb872d8a21262c7ef",
+      "size": 4119,
+      "mode": "100644"
+    },
+    "tests/test_bump_version.py": {
+      "sha256": "6956f44a2b9cfb271ebf7aba4467bc9b399f2efacce2ed33ffc4175668c05655",
+      "size": 4142,
+      "mode": "100644"
+    },
+    "tests/test_client_concurrency.py": {
+      "sha256": "570729134f12f1f206a9f83f55753ad69bfc6ff0b92f88f0df198d7a6d748529",
+      "size": 4218,
+      "mode": "100644"
+    },
+    "tests/test_client_timeouts.py": {
+      "sha256": "7f74dcc9dde0479efdc3ea73d911b6660129cba109f9dc8c4ccfc9db99c83d31",
+      "size": 3278,
+      "mode": "100644"
+    },
+    "tests/test_dispatch_guards.py": {
+      "sha256": "e9b7802022de83f11b38d6463f270796dc2f4304450ca449d974d9b9d9ecc2ad",
+      "size": 3472,
+      "mode": "100644"
+    },
+    "tests/test_dispatch_health.py": {
+      "sha256": "ff70cb3f9cce8c029eca2d28fd5ba818da021c993ba95b80311dec9b58a0da34",
+      "size": 2164,
+      "mode": "100644"
+    },
+    "tests/test_displayed_view.py": {
+      "sha256": "19ba65683626648261879a7f0a8fac5bf396a0e2d4d1c2565291e2a91c770215",
+      "size": 4665,
+      "mode": "100644"
+    },
+    "tests/test_execute_timeout_validation.py": {
+      "sha256": "86b6c9b6d66dd8aee3085497fb3a0326d72d67a21ed3606ab1c20a605b78e891",
+      "size": 3930,
+      "mode": "100644"
+    },
+    "tests/test_freecad_client.py": {
+      "sha256": "35d3ba53b0388c799beb228180682491c666c6b38cbef6e6f29bd2169910913c",
+      "size": 2132,
+      "mode": "100644"
+    },
+    "tests/test_gui_dispatch.py": {
+      "sha256": "5fb64bc4102c522e5f915c5e0887d31a424381beb826cdaaba623f2566cdf108",
+      "size": 11950,
+      "mode": "100644"
+    },
+    "tests/test_headless.py": {
+      "sha256": "03bc608444f450e4dff96b498cd007ef0f2889819f1e48871148c8a20f62527f",
+      "size": 4849,
+      "mode": "100644"
+    },
+    "tests/test_issue171_reload_document_name.py": {
+      "sha256": "299f3c0fe8da255053599d5f9de950ef8bfa2a2449fa2f20f9222ba7eab98a91",
+      "size": 3950,
+      "mode": "100644"
+    },
+    "tests/test_object_validation.py": {
+      "sha256": "ceaede4e258188749b5f5c5de4bf4d21055ff840b41d3d31cc7a8a9833d5c2b2",
+      "size": 6387,
+      "mode": "100644"
+    },
+    "tests/test_parts_library.py": {
+      "sha256": "865ec91a1e47da8fb595add907c455e203dba754bea4ad9490c6845c636121cf",
+      "size": 3332,
+      "mode": "100644"
+    },
+    "tests/test_rpc_command_feedback.py": {
+      "sha256": "8377641a05f98c51d32a049ce4332efc884f357235096024ecf5d26a2203eeed",
+      "size": 2479,
+      "mode": "100644"
+    },
+    "tests/test_rpc_concurrency.py": {
+      "sha256": "81e785afc031964171332fb816ca5aafa786f4cc8c07930f95187d0817251b28",
+      "size": 4855,
+      "mode": "100644"
+    },
+    "tests/test_rpc_handlers.py": {
+      "sha256": "1510e5921b11906bf37d65226b5b5f39c444892ec5f34c315310ccafaf484df5",
+      "size": 22689,
+      "mode": "100644"
+    },
+    "tests/test_rpc_startup.py": {
+      "sha256": "4f383e1ecae033367adee09a038444747eba69084dcda65b345f298b06ec44c7",
+      "size": 3387,
+      "mode": "100644"
+    },
+    "tests/test_serialize.py": {
+      "sha256": "26cc8f21e13eb972f0bd6d3ce3b33d194f4a7403c01f81974dc2caedb0ab81be",
+      "size": 2741,
+      "mode": "100644"
+    },
+    "tests/test_serialize_shape.py": {
+      "sha256": "40f1ec21b741f3ab54414701429b075deca3ac777ef62753aa0de533e0ba4fc8",
+      "size": 2249,
+      "mode": "100644"
+    },
+    "tests/test_tool_errors.py": {
+      "sha256": "5d17e85ee401b591ef015e39d217983aaa5eade4a3f97b08a461f964a177b9f7",
+      "size": 8080,
+      "mode": "100644"
+    },
+    "tests/test_version_handshake.py": {
+      "sha256": "de1ee3ce814d89415e721446e3f58fa0fdd5ada700460eda294c7335fec3bb73",
+      "size": 10128,
+      "mode": "100644"
+    },
+    "uv.lock": {
+      "sha256": "d2bedffc4968565ed8c21a75ea1b4536e7c938fa91360d82ba1195820145ee7b",
+      "size": 128749,
+      "mode": "100644"
+    }
+  }
+}

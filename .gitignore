@@ -11,3 +11,6 @@ logs/
 *.stp
 *.FCStd
 *.zip
+
+# Keep the complete fixed upstream Git snapshot, including its committed .env template.
+!src/aitools/freecad_plugin/vendor/freecad-mcp/**

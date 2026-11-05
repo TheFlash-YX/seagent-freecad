@@ -7,3 +7,5 @@
 SE-SOUL.md 是身份原则维护源；与插件内 skills/seagent-project-init/assets/SE-SOUL.md 分发模板保持逐字节一致。项目初始化后以 AGENTS.md 全文或软链接加载原则，不逐工具检查。
 
 不得提交内部模型、运行数据、凭据、机器配置或缓存。delivery-files.json 是逐文件交付清单，修改文件范围后同步维护。保留上游许可和固定版本锁，不修改上游 MCP。未知端口不接管，不关闭用户 CAD 实例。测试不创建用户可见聊天，不将文件读取测试表述为模型会话行为验收。
+
+源码来源管理：普通Git文件树内置固定上游完整快照 vendor/freecad-mcp；安装从本地经清单核验后复制，不再下载上游源码或在线回退。不得修改内置业务实现或无故刷新锁文件；维护流程见插件 references/vendoring.md。

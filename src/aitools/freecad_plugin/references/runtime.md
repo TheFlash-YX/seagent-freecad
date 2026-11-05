@@ -1,6 +1,6 @@
 # 安装、运行与生命周期
 
-适用本包0.1.0/macOS arm64/FreeCAD1.1.4，2026-10-27。固定来源见upstream.lock.json；官方宿主机制见 https://developers.openai.com/plugins/build/plugins 。根portable command只接受裸命令或包内`./`路径，本包使用`./scripts/launch.sh`；不用绝对`/bin/sh`，不依赖未验证`${PLUGIN_ROOT}`替换。
+适用本包0.1.1/macOS arm64；来源集成更新于2026-11-05。本次在FreeCAD1.1.4完成独立运行时与合成GUI冒烟，范围和证据见仓库src/specs/freecad-mcp-vendoring/validation.md；未验证宿主安装副本。固定来源见upstream.lock.json；官方宿主机制见 https://developers.openai.com/plugins/build/plugins 。根portable command只接受裸命令或包内`./`路径，本包使用`./scripts/launch.sh`；不用绝对`/bin/sh`，不依赖未验证`${PLUGIN_ROOT}`替换。
 
 ## 目录与隔离
 
@@ -26,8 +26,18 @@ doctor只TCP探测/本地文件，不向未知RPC发ping。start端口未知占�
 
 ## 中断、升级与卸载
 
-下载写`.part`，hash通过后才rename，不执行未校验产物；失败非零、有界重试。解压使用固定hash归档、路径检查；上游进一步用Python data过滤防路径/软链逃逸。`*.partial`保留中断状态，不自动删用户文件；检查来源和内容后显式移出/删除该partial目录再重跑。已有不同/被改动源或配置不覆盖；保留旧安装。安装READY最后落盘，launcher缺READY清晰失败。
+下载写`.part`，hash通过后才rename，不执行未校验产物；失败非零、有界重试。解压使用固定hash归档、路径检查；上游源码不再解压下载归档，而从完整核验的 vendor 暂存复制并 rename 发布。`*.partial`保留中断状态，不自动删用户文件；检查来源和内容后显式移出/删除该partial目录再重跑。已有不同/被改动源或配置不覆盖；保留旧安装。安装READY最后落盘，launcher缺READY清晰失败。
 
 运行与构建依赖分别由原版uv.lock及build-requirements.lock锁定。上游PEP517动态构建依赖原本没有冻结，本包预装hash固定构建依赖，再frozen/inexact/no-build-isolation安装原版；不改上游pyproject。保留build依赖便于复现，不能只统计上游运行依赖数作为全部安装包数。
 
 升级通过官方插件安装入口更新副本，重新核对固定源hash、17原工具Schema、安装与身份初始化，不直接修改Codex缓存。卸载注册不停止CAD，先按用户意图保存。可选清理仅删除清单一致自有文件，修改/未知文件和全部用户资料保留；不删除共享Addon、手动MCP和其他插件。详见README命令。
+
+## 内置源码发布与 READY
+
+见 [vendoring.md](vendoring.md)。源码在同一 runtime 下写 upstream.partial、复制后全量核验，再发布 upstream；source-transaction.json 是安装器发布中断证据。仅当该事务与插件/来源/目标一致且已发布目录与完整 vendor 严格一致时，允许恢复缺失清单；普通无清单旧目录默认保留并拒绝。partial 一律保留并拒绝，不自动清空。upstream-files.json、事务和 READY 均临时文件加 rename 发布。
+
+修改环境前将旧 READY 保存为 READY.previous；失败后保持未就绪，不自动恢复旧标记。依赖安装、归属 inventory、实际 DATA venv 的模块/CLI/direct_url 来源全部通过才原子发布当前版本 READY。configure/start/exec-mcp 重新核验当前 READY、期待清单与实际源码；config 的 commit 和 Addon 必须属于当前 DATA。旧 owner 0.1.0 与新 owner 0.1.1 均可识别，卸载仍只删未改变的自有文件。
+
+bootstrap 锁与跨进程运行租约保护当前 launcher/start，旧实例另核对 PID/ps，拒绝活动受管 FreeCAD 或可检测的旧 DATA Python/MCP；不能可靠识别任意自定义启动方式。必须自行停用旧 MCP，保存退出旧 CAD，推荐新 DATA，绝不声称自动安全原地升级。进程查询被沙箱拒绝时不可降级忽略。数据路径保护不是通用项目分类器：显式独立 DATA、目标仓库不重叠、根 marker 与运行子路径无链接逃逸为支持边界。
+
+`uninstall --remove-runtime` 也必须取得独占运行租约并核对旧进程；活动MCP/安装或受管CAD存在时保留运行文件。重复inventory不将用户修改或新增未知文件重新登记为可信归属。

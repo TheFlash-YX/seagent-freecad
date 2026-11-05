@@ -18,6 +18,13 @@
     "url": "https://releases.astral.sh/github/python-build-standalone/releases/download/20260510/cpython-3.12.13%2B20260510-aarch64-apple-darwin-install_only_stripped.tar.gz"
   },
   "license": "MIT",
-  "license_note": "\u4e0a\u6e38\u5b9e\u9645LICENSE\u968freferences/UPSTREAM-LICENSE\u4fdd\u7559\uff1b\u4f20\u9012\u4f9d\u8d56\u8bb8\u53ef\u8bc1\u89c1reference\u53ca\u5b89\u88c5\u5143\u6570\u636e",
-  "build_dependency_lock_sha256": "af8cf9d33917e3c33c3292a331330b0b5e7050a026945431a70accab3d21966f"
+  "license_note": "上游实际LICENSE随references/UPSTREAM-LICENSE保留；传递依赖许可证见reference及安装元数据",
+  "build_dependency_lock_sha256": "af8cf9d33917e3c33c3292a331330b0b5e7050a026945431a70accab3d21966f",
+  "schema_version": 2,
+  "source": {
+    "type": "vendored",
+    "path": "vendor/freecad-mcp",
+    "manifest": "vendor-files.json",
+    "manifest_sha256": "fd309ef2275cdc5188079d0f086dccc93d0341e8a288e7124d764f9a68d75338"
+  }
 }

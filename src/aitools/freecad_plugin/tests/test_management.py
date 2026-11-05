@@ -8,6 +8,8 @@ from pathlib import Path
 import socket
 import subprocess
 import tempfile
+import sys
+import shutil
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,22 +44,27 @@ class ManagementTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='seagent-uninstall-') as d:
             old=manage.DATA;manage.DATA=Path(d)
             try:
-                runtime=Path(d)/'runtime';runtime.mkdir()
+                runtime=Path(d)/'runtime/python';runtime.mkdir(parents=True)
                 (runtime/'own').write_text('original');(runtime/'modified').write_text('original')
-                manage.inventory();(runtime/'modified').write_text('user change')
+                manage.inventory()
+                own=Path(d)/'owned-files.json'; value=json.loads(own.read_text()); value['owner']='seagent-freecad-0.1.0'; own.write_text(json.dumps(value))
+                (runtime/'modified').write_text('user change')
                 (Path(d)/'model.step').write_text('user model')
+                (runtime/'unknown').write_text('unknown user file')
+                manage.inventory()
                 with contextlib.redirect_stdout(io.StringIO()):manage.uninstall(True)
-                self.assertFalse((runtime/'own').exists());self.assertEqual((runtime/'modified').read_text(),'user change');self.assertTrue((Path(d)/'model.step').is_file())
+                self.assertFalse((runtime/'own').exists());self.assertEqual((runtime/'modified').read_text(),'user change');self.assertTrue((Path(d)/'model.step').is_file());self.assertEqual((runtime/'unknown').read_text(),'unknown user file')
             finally:manage.DATA=old
 
     def test_doctor_missing_configured_executables_fails(self):
         with tempfile.TemporaryDirectory(prefix='seagent-doctor-') as d:
             old=manage.DATA;manage.DATA=Path(d)
             try:
+                sys.path.insert(0, str(ROOT/'scripts'))
+                from install import install
+                install(Path(d), ROOT)
                 (Path(d)/'runtime/.venv/bin').mkdir(parents=True)
                 (Path(d)/'runtime/.venv/bin/python').write_text('dummy')
-                (Path(d)/'runtime/upstream').mkdir()
-                (Path(d)/'upstream-files.json').write_text('{}')
                 manage.write_json(Path(d)/'config.json',{'freecadcmd':['/does-not-exist/freecadcmd'],'gui':'/does-not-exist/freecad'})
                 with contextlib.redirect_stdout(io.StringIO()):self.assertEqual(manage.doctor(),1)
             finally:manage.DATA=old
@@ -65,5 +72,20 @@ class ManagementTests(unittest.TestCase):
     def test_shlex_freecadcmd_with_chinese_space(self):
         import shlex
         argv=['/路径 空格/FreeCADCmd','arg space'];self.assertEqual(shlex.split(shlex.join(argv)),argv)
+
+    def test_active_mcp_lease_preserves_runtime_on_uninstall(self):
+        with tempfile.TemporaryDirectory(prefix='seagent-active-uninstall-') as d:
+            old=manage.DATA;manage.DATA=Path(d).resolve()
+            runtime=manage.DATA/'runtime/python';runtime.mkdir(parents=True)
+            own=runtime/'owned';own.write_text('must remain')
+            manage.inventory()
+            program="import sys; from pathlib import Path; sys.path.insert(0,sys.argv[1]); from source_integrity import runtime_lease; fd=runtime_lease(Path(sys.argv[2])); print('locked',flush=True); sys.stdin.readline()"
+            proc=subprocess.Popen([sys.executable,'-c',program,str(ROOT/'scripts'),str(manage.DATA)],stdin=subprocess.PIPE,stdout=subprocess.PIPE,text=True)
+            try:
+                self.assertEqual(proc.stdout.readline().strip(),'locked')
+                with self.assertRaisesRegex(RuntimeError,'活动MCP/安装租约'):manage.uninstall(True)
+                self.assertEqual(own.read_text(),'must remain')
+            finally:
+                proc.communicate('exit\n',timeout=10);manage.DATA=old
 
 if __name__=='__main__':unittest.main(verbosity=2)

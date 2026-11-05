@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "seagent-freecad",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "固定原版 FreeCAD MCP 的本地 Codex 插件接入与项目 SE 身份初始化。",
   "author": {
     "name": "SEAgent"

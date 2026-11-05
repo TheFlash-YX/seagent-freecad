@@ -1,6 +1,6 @@
 # SEAgent FreeCAD Codex 本地插件
 
-首版0.1.0仅提供固定原版 FreeCAD MCP 的 Codex 插件接入，以及已初始化项目的 SE 身份原则入口。原样使用 `neka-nat/freecad-mcp` 0.1.28 / `8babe9927ce8e6e8fe7dd6ae2ffa2c93776e845a`，暴露全部17原工具，不新增 CAD 接口或修改上游。仅保留1个项目初始化技能；操作经验待工程师实际使用后沉淀。
+版本0.1.1提供固定原版 FreeCAD MCP 的 Codex 插件接入，以及已初始化项目的 SE 身份原则入口。原样使用 `neka-nat/freecad-mcp` 0.1.28 / `8babe9927ce8e6e8fe7dd6ae2ffa2c93776e845a`，暴露全部17原工具，不新增 CAD 接口或修改上游。仅保留1个项目初始化技能；操作经验待工程师实际使用后沉淀。
 
 已测环境 macOS arm64 / FreeCAD1.1.4 / 外部CPython3.12.13，桌面内置Codex0.164.0-alpha.11.1，PATH CLI0.163.0；其他平台和第二台干净电脑完整安装未验。FreeCAD 为独立窗口，不是聊天内嵌三维。MCP返回文字/图片可能进入模型服务，内部资料依授权处理。
 
@@ -21,7 +21,7 @@ codex plugin add seagent-freecad@seagent-freecad-local
 "$HOME/Library/Application Support/SEAgentFreeCAD/runtime/.venv/bin/python" scripts/manage.py doctor
 ```
 
-bootstrap 下载校验固定 uv、CPython、上游归档和锁定依赖，不要求系统 Python/uv。仅明确开始 CAD 工作时显式启动：
+bootstrap 从随包 vendor 安全校验并复制固定上游源码；仅下载校验固定 uv、CPython 和锁定依赖，不要求系统 Python/uv。仅明确开始 CAD 工作时显式启动：
 
 ```sh
 "$HOME/Library/Application Support/SEAgentFreeCAD/runtime/.venv/bin/python" scripts/manage.py start
@@ -62,6 +62,14 @@ python3 tests/test_project_init.py
 "$HOME/Library/Application Support/SEAgentFreeCAD/runtime/.venv/bin/python" tests/probe_mcp.py --package "$PWD" --output /绝对路径/新证据
 ```
 
-宿主技能发现可使用 `tests/probe_plugin.py --repo /marketplace根 --output /绝对路径/新证据`；不创建测试聊天。已有监听时端口冲突单测 SKIP，不操作监听实例。
+宿主技能发现可使用 `tests/probe_plugin.py --repo /marketplace根 --output /绝对路径/新证据`；不创建测试聊天。已有监听时端口冲突单测会明确 SKIP，不操作监听实例；跳过不计为通过。
 
-历史 CAD/Agent 工作流不属于当前首版必须验收项；本独立交付仓库不包含开发工作区的历史记录和运行数据。许可见 [UPSTREAM-LICENSE](references/UPSTREAM-LICENSE) 与 [licenses.md](references/licenses.md)。
+本次集成的独立安装与合成 GUI 冒烟入口见[vendoring.md](references/vendoring.md)，开发实际验收状态单独记录；本独立交付仓库不包含开发工作区的历史记录和运行数据。许可见 [UPSTREAM-LICENSE](references/UPSTREAM-LICENSE) 与 [licenses.md](references/licenses.md)。
+
+## 0.1.1 来源和已有安装边界
+
+完整 81 文件快照位于 vendor/freecad-mcp；上游业务代码与 0.1.28 固定提交一致。`--download-only` 仅准备 uv/Python 发行包，不下载上游源码、不创建 READY，也不是完整离线包。Python/uv/PyPI 外部下载仍存在。
+
+推荐新设绝对路径 `SEAGENT_FREECAD_DATA` 验证 0.1.1，然后为该 DATA 单独 configure。同来源且严格一致的旧源码可复用；旧 READY 文本不能直接启动新版。旧 owner 0.1.0 的卸载归属兼容。未知/修改过的源码、缺清单且无匹配发布事务、残留 partial 不覆盖。安装失败保留环境且无当前 READY，不承诺环境事务回滚。
+
+已有受管 FreeCAD 必须保存并退出后才安装，安装器只读检查 instance PID/进程身份，不调用未知 RPC。当前 launcher 持有共享运行租约，安装用独占租约拒绝活动 MCP；旧版还只读检查命令行含本 DATA 的 Python/MCP 路径。自定义/外部启动、隐藏路径或未登记实例不能可靠识别，因此不承诺全自动安全升级；切换前由用户停用 MCP，优先使用新 DATA。无法检查旧进程时保守拒绝。DATA 须由用户明确选在项目源码以外；会拒绝目标仓库重叠、DATA 根项目标志及运行路径逃逸，不提供任意第三方项目祖先的通用识别。

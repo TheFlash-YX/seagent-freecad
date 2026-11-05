@@ -13,7 +13,10 @@ import time
 
 PACKAGE = Path(__file__).resolve().parents[1]
 DATA = Path(os.environ.get('SEAGENT_FREECAD_DATA', str(Path.home() / 'Library/Application Support/SEAgentFreeCAD'))).expanduser().resolve()
-SHA = '8babe9927ce8e6e8fe7dd6ae2ffa2c93776e845a'
+# Imported by tests as well as invoked directly from the scripts directory.
+sys.path.insert(0, str(PACKAGE / 'scripts'))
+from source_integrity import (COMMIT as SHA, OWNER, OWNERS, atomic_json, validate_data,
+                              verify_installed, verify_ready, runtime_lease, read_json, refuse_active)
 
 
 def digest(path):
@@ -64,6 +67,7 @@ def guard_connection():
 
 
 def configure(app):
+    verify_ready(DATA, PACKAGE)
     app = Path(app).expanduser().resolve()
     gui = app / 'Contents/Resources/bin/freecad'
     cmd = app / 'Contents/Resources/bin/freecadcmd'
@@ -83,27 +87,46 @@ def configure(app):
 
 def inventory():
     files = {}
+    previous = DATA / 'owned-files.json'
+    allowed = None
+    if previous.exists():
+        own = read_json(previous)
+        if own.get('owner') not in OWNERS:
+            raise RuntimeError('未知归属清单，拒绝接管')
+        allowed = set(own['files'])
+
     for p in (DATA / 'runtime').rglob('*'):
+        name = p.relative_to(DATA).as_posix()
+        # Only generated program trees; never enroll arbitrary runtime root/user files.
+        if p.relative_to(DATA / 'runtime').parts[0] not in {'uv','python','upstream','.venv'}:
+            continue
+        if allowed is not None:
+            if name in allowed and (p.is_file() or p.is_symlink()):
+                files[name] = own['files'][name]  # Do not enroll user edits as new trusted ownership.
+            continue
         if p.is_symlink():
             files[str(p.relative_to(DATA))] = {'link': os.readlink(p)}
         elif p.is_file():
             files[str(p.relative_to(DATA))] = {'sha256': digest(p)}
-    write_json(DATA / 'owned-files.json', {'owner': 'seagent-freecad-0.1.0', 'files': files})
+    write_json(DATA / 'owned-files.json', {'owner': OWNER, 'files': files})
 
 
 def verify_upstream():
-    manifest = json.loads((DATA / 'upstream-files.json').read_text())
-    source = DATA / 'runtime/upstream'
-    mismatched = [name for name, expected in manifest.items() if not (source / name).is_file() or digest(source / name) != expected]
-    if mismatched:
-        raise RuntimeError('原版源文件不一致：' + ', '.join(mismatched[:5]))
-    return len(manifest)
+    return len(verify_installed(DATA, PACKAGE)[1])
+
+
+def verify_config():
+    c = config()
+    if c.get('upstream_commit') != SHA or c.get('addon_path') != str(DATA / 'runtime/upstream/addon/FreeCADMCP'):
+        raise RuntimeError('配置来源或Addon路径与本DATA不匹配')
+    return c
 
 
 def doctor():
     report = {'data': str(DATA), 'configured': (DATA / 'config.json').is_file(), 'python': (DATA / 'runtime/.venv/bin/python').is_file(), 'port_9875_occupied': occupied(), 'gui_started_by_doctor': False}
     try:
         report['upstream_unchanged_files'] = verify_upstream()
+        verify_ready(DATA, PACKAGE)
     except Exception as exc:
         report['upstream_error'] = str(exc)
     if report['configured']:
@@ -117,7 +140,18 @@ def doctor():
 
 
 def start():
-    c = config()
+    if (DATA / ".bootstrap-lock").exists():
+        raise RuntimeError("运行时安装中，拒绝启动")
+    lease = runtime_lease(DATA)
+    try:
+        return _start()
+    finally:
+        os.close(lease)
+
+
+def _start():
+    verify_ready(DATA, PACKAGE)
+    c = verify_config()
     instance = DATA / 'instance.json'
     if instance.exists():
         old = json.loads(instance.read_text())
@@ -159,7 +193,11 @@ def start():
 
 
 def exec_mcp(extra):
-    c = config()
+    if (DATA / ".bootstrap-lock").exists():
+        raise RuntimeError("运行时安装中，拒绝启动MCP")
+    lease = runtime_lease(DATA)  # Deliberately inherited through os.execv until MCP exits.
+    verify_ready(DATA, PACKAGE)
+    c = verify_config()
     guard_connection()
     verify_upstream()
     executable = DATA / 'runtime/.venv/bin/freecad-mcp'
@@ -174,8 +212,21 @@ def uninstall(remove_runtime):
     if not remove_runtime:
         print('请用codex plugin remove卸载注册。配置、模型、日志、运行时均保留；需清理自有运行时请显式加--remove-runtime。')
         return
-    own = json.loads((DATA / 'owned-files.json').read_text())
-    if own.get('owner') != 'seagent-freecad-0.1.0':
+    validate_data(DATA, PACKAGE)
+    if (DATA / '.bootstrap-lock').exists():
+        raise RuntimeError('运行时安装中，拒绝清理')
+    refuse_active(DATA)
+    lease = runtime_lease(DATA, exclusive=True)
+    try:
+        refuse_active(DATA)
+        return _remove_owned_runtime()
+    finally:
+        os.close(lease)
+
+
+def _remove_owned_runtime():
+    own = read_json(DATA / 'owned-files.json')
+    if own.get('owner') not in OWNERS:
         raise RuntimeError('归属标记不匹配')
     if (DATA / 'instance.json').exists():
         old = json.loads((DATA / 'instance.json').read_text())
@@ -220,6 +271,7 @@ def main():
     u = sub.add_parser('uninstall'); u.add_argument('--remove-runtime', action='store_true')
     args = parser.parse_args()
     try:
+        validate_data(DATA, PACKAGE)
         if args.command == 'configure': configure(args.freecad_app)
         elif args.command == 'doctor': return doctor()
         elif args.command == 'start': return start()
@@ -227,7 +279,7 @@ def main():
         elif args.command == 'verify-upstream': print(verify_upstream())
         elif args.command == 'exec-mcp': exec_mcp(args.extra[1:] if args.extra[:1] == ['--'] else args.extra)
         elif args.command == 'uninstall': uninstall(args.remove_runtime)
-    except (OSError, ValueError, RuntimeError, KeyError) as exc:
+    except (OSError, ValueError, RuntimeError, KeyError, ImportError, TypeError) as exc:
         print(f'SEAgent FreeCAD: {exc}', file=sys.stderr)
         return 1
     return 0
